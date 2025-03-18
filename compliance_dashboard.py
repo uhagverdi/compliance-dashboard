@@ -8,8 +8,8 @@ from sqlalchemy import create_engine
 # Database Setup
 DB_FILE = "compliance_dashboard.db"
 engine = create_engine(f"sqlite:///{DB_FILE}")
-conn = sqlite3.connect(DB_FILE)
-
+engine = create_engine("sqlite:///:memory:")  # In-memory SQLite for Streamlit Cloud
+conn = engine.connect()
 # Function to Generate Dummy Compliance Data
 def generate_dummy_data():
     data = {
