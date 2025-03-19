@@ -28,13 +28,18 @@ def generate_dummy_data():
 
 # Load Data from Database
 def load_data():
-    return pd.read_sql("SELECT * FROM compliance_data", conn)
+    try:
+        df = pd.read_sql("SELECT * FROM compliance_data", conn)
+    except Exception:
+        df = generate_dummy_data()  # If database is missing, generate data
+    return df
 
 # Streamlit App Configuration
 st.set_page_config(page_title="Compliance Risk Dashboard", layout="wide")
 st.title("📊 Compliance Risk Monitoring Dashboard")
 
 # Load Data
+df = generate_dummy_data()  # Ensure data exists
 df = load_data()
 
 # Sidebar Filters
